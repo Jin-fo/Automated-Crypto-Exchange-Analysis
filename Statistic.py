@@ -38,11 +38,39 @@ class Statistic:
             #low
             #high
         })
-        open(f"mod_{self.file_name}.csv", "w")
+        data.to_csv(f'mod_{self.file_name}.csv')
         return data
+    #read the csv file to be plot
+    #The plot update with new data being written into the csv
+    def graph(self):
+        plt.tight_layout()
+        self.format_graph(
+        title   = f"{self.file_name} Price",
+        xlabel  = 'Date', 
+        ylabel  = 'Close Price ($)')      
 
-    def format_plot(self, title, xlabel, ylabel, grid=True):
+        data = self.read()
+        x = data['Date']
+        y_close = data['Close']
+        #plt.plot(x, y_low, label='Low', color='blue', linestyle='-', linewidth=1.5)
+        plt.plot(x, y_close, label='Close', color='lime')
+        #plt.plot(x, y_high, label='High', color='red', linestyle='-', linewidth=1.5)
+        
+
+
+        plt.legend(loc='best') 
+        #plt.tight_layout()  # Automatically adjust subplot parameters to give some padding
+
+
+        plt.savefig(f"{self.file_name}.png")
+        plt.show()
+
+    def format_graph(self, title, xlabel, ylabel, grid=True):
         plt.style.use("dark_background")
+
+        plt.title(title, fontsize=18, fontweight='bold', loc='left')
+        plt.xlabel(xlabel, fontsize=10)
+        plt.ylabel(ylabel, fontsize=10)
 
         plt.rcParams.update({
             'lines.linewidth': 1.0, 
@@ -55,38 +83,9 @@ class Statistic:
             'legend.fancybox': True,    # Rounded box for legend
             'figure.figsize': (12, 6)      # Standard figure size
         })
-            
-        plt.title(title, fontsize=18, fontweight='bold', loc='left')
-        plt.xlabel(xlabel, fontsize=10)
-        plt.ylabel(ylabel, fontsize=10)
 
         plt.xticks(rotation=0, ha='right', fontsize=8)
 
         if grid:
             plt.grid(True, linestyle='--', alpha=0.7)
 
-    #read the csv file to be plot
-    #The plot update with new data being written into the csv
-    def graph(self):
-        self.format_plot(
-        title   = f'{self.file_name}', 
-        xlabel  = 'Date', 
-        ylabel  = 'Close Price ($)')
-            
-        data = self.read()
-        x = data['timestamp']
-
-        #y_low = data['low']
-        y_close = data['close']
-        #y_high = data['high']
-
-        plt.cla()  # Clear the current axes.
-        #plt.plot(x, y_low, label='Low', color='blue', linestyle='-', linewidth=1.5)
-        plt.plot(x, y_close, label='Close', color='lime', linestyle='-', linewidth=1.5)
-        #plt.plot(x, y_high, label='High', color='red', linestyle='-', linewidth=1.5)
-        
-        plt.legend(loc='best') 
-        plt.tight_layout()  # Automatically adjust subplot parameters to give some padding
-        plt.savefig(f"{self.file_name}.png")
-        plt.show()
-        plt.clf()  # Clear the figure
