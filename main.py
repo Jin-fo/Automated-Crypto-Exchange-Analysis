@@ -30,8 +30,16 @@ def task(symbol, type):
     
 
     #for loop of focus array
-    for sym in symbol:
-        account.focus(sym)
+    if len(symbol) > 1:
+        for sym in symbol:
+            account.focus(sym)
+            hist_data = account.history(type, time = 0.3, step = 5)
+            
+            data = Statistic(sym, hist_data)
+            data.create()
+            data.graph()
+    else:
+        account.focus(symbol)
         hist_data = account.history(type, time = 0.3, step = 5)
         
         data = Statistic(sym, hist_data)
@@ -68,7 +76,7 @@ def main():
         #start date(scroll bar + hard input)
         #label(bar, close, etc)
 
-    symbol = "BTCUSD", "ETHUSD"
+    symbol = "BTCUSD"
     task(symbol, type = "BAR")
 
     #=>async data(option, parameter)

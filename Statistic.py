@@ -40,8 +40,6 @@ class Statistic:
         })
         data.to_csv(f'mod_{self.file_name}.csv')
         return data
-    #read the csv file to be plot
-    #The plot update with new data being written into the csv
 
     def format_graph(self, title, xlabel, ylabel, grid=True):
         plt.style.use("dark_background")
@@ -72,18 +70,15 @@ class Statistic:
             title   = f"{self.file_name} Price",
             xlabel  = 'Date', 
             ylabel  = 'Close Price ($)') 
-                
+           
         data = self.read()
         x = data['Date']
         y_close = data['Close']
-
-   
-
         #plt.plot(x, y_low, label='Low', color='blue', linestyle='-', linewidth=1.5)
         plt.plot(x, y_close, label='Close', color='lime')
         #plt.plot(x, y_high, label='High', color='red', linestyle='-', linewidth=1.5)
         
-        #plt.tight_layout()
+        plt.tight_layout()
         plt.legend(loc='best') 
         plt.savefig(f"{self.file_name}.png")
         plt.show()
