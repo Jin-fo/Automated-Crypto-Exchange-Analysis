@@ -2,11 +2,7 @@ from model import *
 from plot import *
 from data import *
 
-import numpy as np
-import pandas as pd
 import questionary as qu
-
-account = Account()
 
 def open_account(api_key, secret_key, paper, name):
     global account
@@ -29,12 +25,21 @@ def del_account(name):
             print(f"[!][Deleted Account: {a.name}]")
             return a
 
-def task(symbol):
+def task(symbol, type):
+    account.info()
+    
+
     #for loop of focus array
-    hist = account.history(symbol, "BAR", time = 0.3, step = 5)
+    for sym in symbol:
+        account.focus(sym)
+        hist_data = account.history(type, time = 0.3, step = 5)
+        plot = Plot(sym, hist_data)
+        plot.create()
+        plot.graph()
     #for loop of focus array
     #get file name 
-    live = account.stream(symbol)
+    #live_data = account.stream(symbol)
+    
     #for sym in symbol:
         #live = [asyncio.create_task(market.stream(sym))]
     # Run all tasks concurrently
@@ -57,17 +62,13 @@ def main():
     #check to verify keys
 
     account = open_account(api_key=api_key, secret_key=secret_key, paper=paper, name=name)
-    symbol = None
-
-
-
     #option and parameter
         #symbol
         #start date(scroll bar + hard input)
         #label(bar, close, etc)
 
-    symbol = 'BTCUSD'
-
+    symbol = "BTCUSD", "ETHUSD"
+    task(symbol, type = "BAR")
 
     #=>async data(option, parameter)
         #gather history
