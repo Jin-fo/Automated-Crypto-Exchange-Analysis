@@ -43,7 +43,7 @@ class Statistic:
     #read the csv file to be plot
     #The plot update with new data being written into the csv
     def graph(self):
-        plt.tight_layout()
+        
         self.format_graph(
         title   = f"{self.file_name} Price",
         xlabel  = 'Date', 
@@ -56,11 +56,8 @@ class Statistic:
         plt.plot(x, y_close, label='Close', color='lime')
         #plt.plot(x, y_high, label='High', color='red', linestyle='-', linewidth=1.5)
         
-
-
         plt.legend(loc='best') 
-        #plt.tight_layout()  # Automatically adjust subplot parameters to give some padding
-
+        plt.tight_layout()
 
         plt.savefig(f"{self.file_name}.png")
         plt.show()
@@ -81,7 +78,7 @@ class Statistic:
             'legend.frameon': True,     # Frame around legend
             'legend.framealpha': 0.9,   # Slight transparency for legend frame
             'legend.fancybox': True,    # Rounded box for legend
-            'figure.figsize': (12, 6)      # Standard figure size
+            'figure.figsize': (8, 5)      # Standard figure size
         })
 
         plt.xticks(rotation=0, ha='right', fontsize=8)
