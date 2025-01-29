@@ -23,7 +23,7 @@ def time_now(country = "America", city = "New_York"):
     time = datetime.now(ZoneInfo(f"{country}/{city}"))
     return time
 
-class Account:
+class Client:
     #stack = [] mutiple account
     API_KEY = str
     SECRET_KEY = str
@@ -37,7 +37,7 @@ class Account:
 #open the account using the API Key
     def __init__(self, name):
         self.name = name
-        self.client = TradingClient(api_key=Account.API_KEY, secret_key=Account.SECRET_KEY, paper=Account.paper)
+        self.client = TradingClient(api_key=Client.API_KEY, secret_key=Client.SECRET_KEY, paper=Client.paper)
         self.position = self.client.get_all_positions()
         self.account = self.client.get_account()
 
@@ -50,7 +50,6 @@ class Account:
         return None
     
     def focus(self, symbol):
-        print(symbol)
         error = False
         try:
             self.symbol = self.client.get_asset(symbol_or_asset_id=symbol)
@@ -72,12 +71,12 @@ class Account:
         )
         if self.symbol.exchange == "CRYPTO":
             if type.upper() == "BAR":
-                crypto_history = CryptoHistoricalDataClient(api_key=Account.API_KEY, secret_key=Account.SECRET_KEY)
+                crypto_history = CryptoHistoricalDataClient(api_key=Client.API_KEY, secret_key=Client.SECRET_KEY)
                 bar = crypto_history.get_crypto_bars(data).df
 
         elif self.symbol.exchange != "CRYPTO":
             if type.upper() == "BAR":
-                stock_history = StockHistoricalDataClient(api_key=Account.API_KEY, secret_key=Account.SECRET_KEY)
+                stock_history = StockHistoricalDataClient(api_key=Client.API_KEY, secret_key=Client.SECRET_KEY)
                 bar = stock_history.get_stock_bars(data).df
 
         else:

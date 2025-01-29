@@ -1,15 +1,15 @@
 from model import *
-from plot import *
-from data import *
+from Statistic import *
+from Client import *
 
 import questionary as qu
 
 def open_account(api_key, secret_key, paper, name):
     global account
-    Account.API_KEY = api_key
-    Account.SECRET_KEY = secret_key
-    Account.paper = paper
-    account = Account(name = f'{name}')
+    Client.API_KEY = api_key
+    Client.SECRET_KEY = secret_key
+    Client.paper = paper
+    account = Client(name = f'{name}')
     return account
 
 def get_account(name):
@@ -33,9 +33,10 @@ def task(symbol, type):
     for sym in symbol:
         account.focus(sym)
         hist_data = account.history(type, time = 0.3, step = 5)
-        plot = Plot(sym, hist_data)
-        plot.create()
-        plot.graph()
+        
+        data = Statistic(sym, hist_data)
+        data.create()
+        data.graph()
     #for loop of focus array
     #get file name 
     #live_data = account.stream(symbol)
