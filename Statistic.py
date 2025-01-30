@@ -1,3 +1,4 @@
+import os
 import matplotlib.pyplot as plt
 import csv
 import numpy as np
@@ -10,19 +11,6 @@ class Statistic:
     def __init__(self, symbol, data):
         self.data = data
         self.file_name = symbol
-
-    def append(self, data):
-        field = [i[0] for i in data]
-        data = {i[0]: i[1] for i in data}
-        #print(data) returns
-        #{'symbol': 'ETH/USD', 'timestamp': datetime.datetime(2024, 8, 11, 21, 56, tzinfo=datetime.timezone.utc), 'open': 2577.44, 'high': 2579.215, 'low': 2577.44, 'close': 2579.215, 'volume': 0.0, 'trade_count': 0.0, 'vwap': 0.0}
-        #NOT POSSIBLE FOR print(data.symbol)
-        with open(f"{self.file_name}.csv", 'a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames = field)
-            if file.tell() == 0:
-                writer.writeheader()
-
-            writer.writerow(data)
 
     def create(self):#create and delete file by focus
         self.data.to_csv(f"{self.file_name}.csv")
@@ -37,8 +25,22 @@ class Statistic:
             #low
             #high
         })
+        os.remove(f'{self.file_name}.csv')
         data.to_csv(f'mod_{self.file_name}.csv', index = False)
         return data
+    
+    def append(self, data):
+        field = [i[0] for i in data]
+        data = {i[0]: i[1] for i in data}
+        #print(data) returns
+        #{'symbol': 'ETH/USD', 'timestamp': datetime.datetime(2024, 8, 11, 21, 56, tzinfo=datetime.timezone.utc), 'open': 2577.44, 'high': 2579.215, 'low': 2577.44, 'close': 2579.215, 'volume': 0.0, 'trade_count': 0.0, 'vwap': 0.0}
+        #NOT POSSIBLE FOR print(data.symbol)
+        with open(f"{self.file_name}.csv", 'a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames = field)
+            if file.tell() == 0:
+                writer.writeheader()
+
+            writer.writerow(data)
 
     def format_graph(self, title, xlabel, ylabel, grid=True):
         plt.style.use("dark_background")
