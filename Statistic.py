@@ -37,7 +37,7 @@ class Statistic:
             #low
             #high
         })
-        data.to_csv(f'mod_{self.file_name}.csv')
+        data.to_csv(f'mod_{self.file_name}.csv', index = False)
         return data
 
     def format_graph(self, title, xlabel, ylabel, grid=True):

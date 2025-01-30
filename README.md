@@ -46,6 +46,14 @@ Write a simple interface to inpute keys, action, and display
     >[STALL]display resulting profilio on action and update from stream
 
 Step 2
+[current]Organize and Modulate the Program to be simplify and optimize + feature and improvement
+    >[Done]Modulate seperate function of the application; model, statistic, main
+    >[Done]Accept array of symbol in the pipe-line
+    >[]Accept stocks and crypto
+    >[]Display graph for live + muitlpe data 
+    >[]Clean up data to reduce unncessary information, perpare to feed into the model
+    >[]Allow user to interact/initialize parameter/option
+
 Use histroical + live data to be anaylze  10/2024
     >[DONE]Immplement AI model to predict future price
     >[DONE]Histroical Data analayzed by the AI model is graphed 
