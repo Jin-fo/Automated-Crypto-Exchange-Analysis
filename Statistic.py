@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import csv
 import numpy as np
 import pandas as pd
+from datetime import datetime
 
 class Statistic:
     data = None
@@ -26,7 +27,7 @@ class Statistic:
             #high
         })
         os.remove(f'{self.file_name}.csv')
-        data.to_csv(f'mod_{self.file_name}.csv', index = False)
+        data.to_csv(f'{self.file_name}_mod.csv', index = False)
         return data
     
     def append(self, data):

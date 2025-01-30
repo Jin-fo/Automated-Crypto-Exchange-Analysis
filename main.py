@@ -4,7 +4,6 @@ from client import *
 
 #import questionary as qu
 
-
 def open_account(api_key, secret_key, paper, name):
     global account
     Client.API_KEY = api_key
