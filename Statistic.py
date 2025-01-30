@@ -28,7 +28,6 @@ class Statistic:
         self.data.to_csv(f"{self.file_name}.csv")
         print(f"\t - Recorded: {self.file_name}")
         
-
     def read(self):
         data = pd.read_csv(f'{self.file_name}.csv')
         data = pd.DataFrame({
@@ -43,12 +42,9 @@ class Statistic:
 
     def format_graph(self, title, xlabel, ylabel, grid=True):
         plt.style.use("dark_background")
+        plt.figure(figsize=(8, 5))
 
-        plt.title(title, fontsize=18, fontweight='bold', loc='left')
-        plt.xlabel(xlabel, fontsize=10)
-        plt.ylabel(ylabel, fontsize=10)
-
-        plt.rcParams.update({
+        plt.style.context({
             'lines.linewidth': 1.0, 
             'axes.facecolor': 'black',     
             'axes.grid': grid,             # Enable grid
@@ -57,9 +53,11 @@ class Statistic:
             'legend.frameon': True,     # Frame around legend
             'legend.framealpha': 0.9,   # Slight transparency for legend frame
             'legend.fancybox': True,    # Rounded box for legend
-            'figure.figsize': (8, 5)      # Standard figure size
         })
-
+        
+        plt.title(title, fontsize=18, fontweight='bold', loc='left')
+        plt.xlabel(xlabel, fontsize=10)
+        plt.ylabel(ylabel, fontsize=10)
         plt.xticks(rotation=0, ha='right', fontsize=8)
 
         if grid:
@@ -70,16 +68,18 @@ class Statistic:
             title   = f"{self.file_name} Price",
             xlabel  = 'Date', 
             ylabel  = 'Close Price ($)') 
-           
+        
         data = self.read()
+        #check correct naming convention
         x = data['Date']
         y_close = data['Close']
-        #plt.plot(x, y_low, label='Low', color='blue', linestyle='-', linewidth=1.5)
+
         plt.plot(x, y_close, label='Close', color='lime')
-        #plt.plot(x, y_high, label='High', color='red', linestyle='-', linewidth=1.5)
-        
+        #high, low etc
+        print(f"\t - Graphed:  {self.file_name}")
+
         plt.tight_layout()
         plt.legend(loc='best') 
         plt.savefig(f"{self.file_name}.png")
-        plt.show()
+        plt.show(block=False)
 

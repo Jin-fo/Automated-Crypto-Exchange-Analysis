@@ -1,8 +1,9 @@
 from model import *
-from Statistic import *
-from Client import *
+from statistic import *
+from client import *
 
-import questionary as qu
+#import questionary as qu
+
 
 def open_account(api_key, secret_key, paper, name):
     global account
@@ -28,23 +29,18 @@ def del_account(name):
 def task(symbol, type):
     account.info()
     
-
+    if isinstance(symbol, str):  # If symbol is a single string, convert it to a list
+        symbol = [symbol]
     #for loop of focus array
-    if len(symbol) > 1:
-        for sym in symbol:
-            account.focus(sym)
-            hist_data = account.history(type, time = 0.3, step = 5)
-            
-            data = Statistic(sym, hist_data)
-            data.create()
-            data.graph()
-    else:
-        account.focus(symbol)
+    for sym in symbol:
+        account.focus(sym)
         hist_data = account.history(type, time = 0.3, step = 5)
         
         data = Statistic(sym, hist_data)
         data.create()
+
         data.graph()
+
     #for loop of focus array
     #get file name 
     #live_data = account.stream(symbol)
@@ -76,7 +72,7 @@ def main():
         #start date(scroll bar + hard input)
         #label(bar, close, etc)
 
-    symbol = "BTCUSD"
+    symbol = "BTCUSD", "ETHUSD"
     task(symbol, type = "BAR")
 
     #=>async data(option, parameter)
